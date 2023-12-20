@@ -9,7 +9,7 @@ const useUserInfo = () => {
   const axiosPublic = useAxiosPublic();
   const axiosSecure = useAxiosSecure();
 
-  const { data: userInfo } = useQuery({
+  const { data: userInfo=[] } = useQuery({
     queryKey: ["userInfoHook"],
     enabled: !!user?.email && !userloading,
     queryFn: async () => {

@@ -7,7 +7,7 @@ const useStatistic = () => {
   const { user, userloading } = useAuth();
   const axiosPublic = useAxiosPublic();
 
-  const { data: userStasisticData } = useQuery({
+  const { data: userStasisticData = [] } = useQuery({
     queryKey: ["statisticdatainfo"],
     enabled: !!user?.email && !userloading,
     queryFn: async () => {
