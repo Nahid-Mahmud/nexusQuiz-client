@@ -2,6 +2,8 @@ import { useState } from "react";
 import { useLoaderData } from "react-router-dom";
 import Swal from "sweetalert2";
 import QuizDataWithAnswer from "./QuizDataWithAnswer";
+import useAxiosPublic from "../../Hooks/useAxiosPublic";
+import { useAuth } from "../../Hooks/useAuth";
 
 const SingleQuiz = () => {
   const quizData = useLoaderData();
@@ -9,17 +11,19 @@ const SingleQuiz = () => {
   const [score, setScore] = useState(0);
   const [showdata, setShowdata] = useState(false);
   const { headline, questions } = quizData;
+  const axiosPublic = useAxiosPublic();
+  const { user } = useAuth();
   // console.log(questions[0].length);
 
   // console.log("Quiz data form singleQuiz page", questions[quizIndex]?.answer);
-  let x = 0;
+  let finalScore = 0;
 
   // console.log("Quiz data form singleQuiz page", questions.length);
 
   const handleQuizNextButton = (answer, index) => {
     if (answer === questions[quizIndex]?.answer) {
       setScore(score + 1);
-      x = score + 1;
+      finalScore = score + 1;
     }
 
     // increasing score
@@ -30,10 +34,22 @@ const SingleQuiz = () => {
 
     if (quizIndex === questions.length - 1) {
       // alert("Your score is " + score);
+
+      axiosPublic
+        .post(`/scores`, {
+          score: finalScore,
+          headline,
+          totalQuiz: questions?.length,
+          email: user?.email,
+        })
+        .then((res) => {
+          console.log(res.data);
+        });
+
       setShowdata(true);
       Swal.fire({
         title: "Good job!",
-        text: ` Your score is ${x} `,
+        text: ` Your score is ${finalScore} `,
         icon: "success",
       });
     }

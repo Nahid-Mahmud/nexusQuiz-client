@@ -5,6 +5,7 @@ import Login from "../Pages/Login/Login";
 import SignUp from "../Pages/SignUp/SignUp";
 import Quizes from "../Pages/Quizes/Quizes";
 import SingleQuiz from "../Pages/Quizes/SingleQuiz";
+import Statistics from "../Pages/Statistics";
 
 const router = createBrowserRouter([
   {
@@ -35,6 +36,10 @@ const router = createBrowserRouter([
           // console.log(params);
           return fetch(`${import.meta.env.VITE_baseUrl}/quiz/${params.id}`);
         },
+      },
+      {
+        path: "statistics",
+        element: <Statistics />,
       },
     ],
   },

@@ -55,6 +55,14 @@ const NavBar = () => {
       )}
 
       {user ? (
+        <li>
+          <NavItem itemName={"Statistics"} pathName={"statistics"} />
+        </li>
+      ) : (
+        ""
+      )}
+
+      {user ? (
         ""
       ) : (
         <li>

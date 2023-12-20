@@ -21,17 +21,17 @@ const Quizes = () => {
 
   console.log(quizData);
   return (
-    <>
-      <div>
+    <div>
+      <div className="max-w-[95vw] mx-auto">
         <div>
           <p className="text-center text-2xl font-semibold "> All Quizes </p>
         </div>
-        <div className="text-center gap-3 my-5 flex flex-col bg-slate-200 shadow-2xl max-w-lg mx-auto ">
+        <div className="text-center gap-3 my-5 p-3 flex flex-col shadow-2xl max-w-lg mx-auto ">
           {quizData?.map((quiz, index) => {
             return (
               <p
                 onClick={() => handleQuiz(quiz?._id)}
-                className="btn"
+                className="btn overflow-hidden"
                 key={index}
               >
                 {" "}
@@ -41,7 +41,7 @@ const Quizes = () => {
           })}
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
