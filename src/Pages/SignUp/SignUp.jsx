@@ -1,19 +1,24 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
+import { useAuth } from "../../Hooks/useAuth";
 
 const SignUp = () => {
+  const {emailPassSignup} = useAuth();
   const [userType, setUserType] = useState(undefined);
 
   // user type function
   const handleOptionChange = (e) => {
     setUserType(e.target.value);
-    console.log(userType);
   };
 
   // handle form function
   const handleForm = (event) => {
     event.preventDefault();
+    // get the values from form
+    const email = event.target.email.value;
+    const password = event.target.password.value;
+    const confirmPassword = event.target.confirmPassword.value;
     if (userType === undefined) {
       Swal.fire({
         icon: "error",
@@ -22,10 +27,21 @@ const SignUp = () => {
       });
       return;
     }
+    if (password !== confirmPassword) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Password and confirm password does not match!",
+      });
+      return;
+    }
 
-    const email = event.target.email.value;
-    const password = event.target.password.value;
-    console.log(email, password, userType);
+    console.log(email, password, userType, confirmPassword);
+
+
+    
+
+
   };
 
   return (
@@ -74,7 +90,7 @@ const SignUp = () => {
                   </label>
                   <input
                     type="password"
-                    name="confirm-password"
+                    name="confirmPassword"
                     id="confirm-password"
                     placeholder="••••••••"
                     className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -83,7 +99,7 @@ const SignUp = () => {
                 </div>
 
                 <div>
-                  <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                  <label className="block mb-2 capitalize text-sm font-medium text-gray-900 dark:text-white">
                     Select A user Type
                   </label>
                   <select

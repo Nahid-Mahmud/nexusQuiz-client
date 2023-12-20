@@ -1,7 +1,11 @@
 import { Link } from "react-router-dom";
 import NavItem from "./NavItem";
+import { useContext } from "react";
+import { AuthContext } from "../Provider/AuthProvider";
 
 const NavBar = () => {
+  // const { demoUser } = useContext(AuthContext);
+  // console.log(demoUser);
   const navItems = (
     <>
       <li>
