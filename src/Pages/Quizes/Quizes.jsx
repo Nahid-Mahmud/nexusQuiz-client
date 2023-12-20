@@ -2,10 +2,15 @@ import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import { useNavigate } from "react-router-dom";
+import useUserInfo from "../../Hooks/useUserInfo";
 
 const Quizes = () => {
   const navigete = useNavigate();
   const axiosSecure = useAxiosSecure();
+  const { userInfo } = useUserInfo();
+  const isTeacher = userInfo?.role === "teacher" ? true : false;
+  const isStudent = userInfo?.role === "student" ? true : false;
+
   const { data: quizData } = useQuery({
     queryKey: ["quizes"],
     queryFn: async () => {

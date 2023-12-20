@@ -6,11 +6,15 @@ import useAxiosSecure from "../Hooks/useAxiosSecure";
 import { useAuth } from "../Hooks/useAuth";
 import { useQuery } from "@tanstack/react-query";
 import Swal from "sweetalert2";
+import useUserInfo from "../Hooks/useUserInfo";
 
 const NavBar = () => {
   const axiosSecure = useAxiosSecure();
   const { signoutUser, user, userloading } = useAuth();
   const navigate = useNavigate();
+  const { userInfo } = useUserInfo();
+  const isTeacher = userInfo?.role === "teacher" ? true : false;
+  const isStudent = userInfo?.role === "student" ? true : false;
 
   // const { demoUser } = useContext(AuthContext);
   // console.log(demoUser);
@@ -48,7 +52,7 @@ const NavBar = () => {
         <NavItem itemName={"Home"} pathName={"/"} />
       </li>
 
-      {user ? (
+      {user && isStudent ? (
         <li>
           <NavItem itemName={"Quizes"} pathName={"quizes"} />
         </li>
@@ -56,7 +60,7 @@ const NavBar = () => {
         ""
       )}
 
-      {user ? (
+      {user && isStudent ? (
         <li>
           <NavItem itemName={"Statistics"} pathName={"statistics"} />
         </li>
@@ -70,6 +74,20 @@ const NavBar = () => {
         <li>
           <NavItem itemName={"Login"} pathName={"logIn"} />
         </li>
+      )}
+      {user && isTeacher ? (
+        <li>
+          <NavItem itemName={"Add Quiz"} pathName={"addQuiz"} />
+        </li>
+      ) : (
+        ""
+      )}
+      {user && isTeacher ? (
+        <li>
+          <NavItem itemName={"Delete Quiz"} pathName={"deleteQuiz"} />
+        </li>
+      ) : (
+        ""
       )}
     </>
   );

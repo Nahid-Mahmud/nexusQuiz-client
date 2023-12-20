@@ -7,6 +7,7 @@ import Quizes from "../Pages/Quizes/Quizes";
 import SingleQuiz from "../Pages/Quizes/SingleQuiz";
 import Statistics from "../Pages/Statistics";
 import PrivateRoute from "../PrivaateRoute/PrivateRoute";
+import AddQuiz from "../Pages/AddQuiz/AddQuiz";
 
 const router = createBrowserRouter([
   {
@@ -53,6 +54,10 @@ const router = createBrowserRouter([
             <Statistics />
           </PrivateRoute>
         ),
+      },
+      {
+        path: "/addQuiz",
+        element: <AddQuiz />,
       },
     ],
   },
