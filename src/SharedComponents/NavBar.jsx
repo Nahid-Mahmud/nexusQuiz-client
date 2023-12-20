@@ -2,24 +2,65 @@ import { Link } from "react-router-dom";
 import NavItem from "./NavItem";
 import { useContext } from "react";
 import { AuthContext } from "../Provider/AuthProvider";
+import useAxiosSecure from "../Hooks/useAxiosSecure";
+import { useAuth } from "../Hooks/useAuth";
+import { useQuery } from "@tanstack/react-query";
+import Swal from "sweetalert2";
 
 const NavBar = () => {
+  const axiosSecure = useAxiosSecure();
+  const { signoutUser, user, userloading } = useAuth();
+
   // const { demoUser } = useContext(AuthContext);
   // console.log(demoUser);
+  // signOut button handler
+  const handleSignOut = () => {
+    signoutUser()
+      .then(() => {})
+      .catch((err) => {
+        // console.log(err);
+      });
+    Swal.fire({
+      position: "center",
+      icon: "success",
+      title: "Logout Successfull !",
+      showConfirmButton: false,
+      timer: 1500,
+    });
+  };
+
+  // get user form database
+  const { data: userData } = useQuery({
+    queryKey: ["user"],
+    enabled: !!user?.email && !userloading,
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/user/${user?.email}`);
+      return res.data;
+    },
+  });
+  console.log(userData);
+
   const navItems = (
     <>
       <li>
         <NavItem itemName={"Home"} pathName={"/"} />
       </li>
-      <li>
-        <NavItem itemName={"Quizes"} pathName={"quizes"} />
-      </li>
-      <li>
-        <NavItem itemName={"Login"} pathName={"logIn"} />
-      </li>
-      <li>
-        <NavItem itemName={"SignUp"} pathName={"signUp"} />
-      </li>
+
+      {user ? (
+        <li>
+          <NavItem itemName={"Quizes"} pathName={"quizes"} />
+        </li>
+      ) : (
+        ""
+      )}
+
+      {user ? (
+        ""
+      ) : (
+        <li>
+          <NavItem itemName={"Login"} pathName={"logIn"} />
+        </li>
+      )}
     </>
   );
 
@@ -96,9 +137,11 @@ const NavBar = () => {
             {navItems}
           </ul>
         </div>
-        <div className="navbar-end">
-          <a className="btn">Logout</a>
-        </div>
+        {user && (
+          <div onClick={handleSignOut} className="navbar-end ">
+            <span className="btn">Logout</span>
+          </div>
+        )}
       </div>
     </div>
   );

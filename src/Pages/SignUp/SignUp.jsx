@@ -1,11 +1,17 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { useAuth } from "../../Hooks/useAuth";
+import useAxiosPublic from "../../Hooks/useAxiosPublic";
+import { toast } from "react-toastify";
 
 const SignUp = () => {
-  const {emailPassSignup} = useAuth();
+  const { emailPassSignup } = useAuth();
   const [userType, setUserType] = useState(undefined);
+  const axiosPublic = useAxiosPublic();
+  const [signupError, setSignupError] = useState(null);
+
+  const navigate = useNavigate();
 
   // user type function
   const handleOptionChange = (e) => {
@@ -15,10 +21,12 @@ const SignUp = () => {
   // handle form function
   const handleForm = (event) => {
     event.preventDefault();
+    setSignupError("");
     // get the values from form
     const email = event.target.email.value;
     const password = event.target.password.value;
     const confirmPassword = event.target.confirmPassword.value;
+    const name = event.target.name.value;
     if (userType === undefined) {
       Swal.fire({
         icon: "error",
@@ -37,11 +45,36 @@ const SignUp = () => {
     }
 
     console.log(email, password, userType, confirmPassword);
+    const userInfo = {
+      email,
+      name,
+      role: userType,
+    };
 
-
-    
-
-
+    emailPassSignup(email, password)
+      .then((res) => {
+        const currentUser = res.user;
+        if (currentUser) {
+          axiosPublic.post("/users", userInfo).then((res) => {
+            if (res.data.insertedId) {
+              toast("🦄SignUp Successfull !", {
+                position: "top-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+              });
+              navigate("/");
+            }
+          });
+        }
+      })
+      .catch((err) => {
+        setSignupError(err.message);
+      });
   };
 
   return (
@@ -58,6 +91,19 @@ const SignUp = () => {
                 className="space-y-4 md:space-y-6"
                 action="#"
               >
+                <div>
+                  <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                    Your Name
+                  </label>
+                  <input
+                    type="text"
+                    name="name"
+                    id="name"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                    placeholder="Jhon Doe"
+                    required={true}
+                  />
+                </div>
                 <div>
                   <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                     Your email
@@ -115,7 +161,10 @@ const SignUp = () => {
                     <option value={"student"}>Student</option>
                   </select>
                 </div>
-
+                <p className="text-red-500 text-xs italic">
+                  {/* {userSignUpError} */}
+                  {signupError}
+                </p>
                 <div className="flex items-start">
                   <div className="flex items-center h-5">
                     <input
@@ -126,6 +175,7 @@ const SignUp = () => {
                       required
                     />
                   </div>
+
                   <div className="ml-3 text-sm">
                     <label className="font-light text-gray-500 dark:text-gray-300">
                       I accept the{" "}
