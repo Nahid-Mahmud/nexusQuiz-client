@@ -106,6 +106,7 @@ const NavBar = () => {
               <li>
                 <a>Item 3</a>
               </li> */}
+              {navItems}
             </ul>
           </div>
           <Link to={"/"} className="btn btn-ghost text-xl">
