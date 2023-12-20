@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import NavItem from "./NavItem";
 import { useContext } from "react";
 import { AuthContext } from "../Provider/AuthProvider";
@@ -10,6 +10,7 @@ import Swal from "sweetalert2";
 const NavBar = () => {
   const axiosSecure = useAxiosSecure();
   const { signoutUser, user, userloading } = useAuth();
+  const navigate = useNavigate();
 
   // const { demoUser } = useContext(AuthContext);
   // console.log(demoUser);
@@ -27,6 +28,7 @@ const NavBar = () => {
       showConfirmButton: false,
       timer: 1500,
     });
+    navigate("/");
   };
 
   // get user form database

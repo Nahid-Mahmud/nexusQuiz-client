@@ -6,6 +6,7 @@ import SignUp from "../Pages/SignUp/SignUp";
 import Quizes from "../Pages/Quizes/Quizes";
 import SingleQuiz from "../Pages/Quizes/SingleQuiz";
 import Statistics from "../Pages/Statistics";
+import PrivateRoute from "../PrivaateRoute/PrivateRoute";
 
 const router = createBrowserRouter([
   {
@@ -15,22 +16,30 @@ const router = createBrowserRouter([
     children: [
       {
         element: <Home />,
-        index: true,
+        path: "/",
       },
       {
         element: <Login />,
-        path: "logIn",
+        path: "/logIn",
       },
       {
         element: <SignUp />,
-        path: "signUp",
+        path: "/signUp",
       },
       {
-        element: <Quizes />,
+        element: (
+          <PrivateRoute>
+            <Quizes />
+          </PrivateRoute>
+        ),
         path: "quizes",
       },
       {
-        element: <SingleQuiz />,
+        element: (
+          <PrivateRoute>
+            <SingleQuiz />
+          </PrivateRoute>
+        ),
         path: "quiz/:id",
         loader: ({ params }) => {
           // console.log(params);
@@ -39,7 +48,11 @@ const router = createBrowserRouter([
       },
       {
         path: "statistics",
-        element: <Statistics />,
+        element: (
+          <PrivateRoute>
+            <Statistics />
+          </PrivateRoute>
+        ),
       },
     ],
   },
