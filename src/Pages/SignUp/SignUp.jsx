@@ -1,11 +1,31 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const SignUp = () => {
+  const [userType, setUserType] = useState(undefined);
+
+  // user type function
+  const handleOptionChange = (e) => {
+    setUserType(e.target.value);
+    console.log(userType);
+  };
+
+  // handle form function
   const handleForm = (event) => {
     event.preventDefault();
+    if (userType === undefined) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Select a user type!",
+      });
+      return;
+    }
+
     const email = event.target.email.value;
     const password = event.target.password.value;
-    console.log(email, password);
+    console.log(email, password, userType);
   };
 
   return (
@@ -61,6 +81,25 @@ const SignUp = () => {
                     required={true}
                   />
                 </div>
+
+                <div>
+                  <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                    Select A user Type
+                  </label>
+                  <select
+                    name="option"
+                    onChange={handleOptionChange}
+                    value={userType}
+                    className="select select-bordered w-full "
+                  >
+                    <option disabled selected>
+                      Select An option
+                    </option>
+                    <option value={"teacher"}>Teacher</option>
+                    <option value={"student"}>Student</option>
+                  </select>
+                </div>
+
                 <div className="flex items-start">
                   <div className="flex items-center h-5">
                     <input
@@ -80,12 +119,12 @@ const SignUp = () => {
                     </label>
                   </div>
                 </div>
-                <button
+                <input
                   type="submit"
+                  value={" Create an account"}
                   className="w-full text-black btn  bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
-                >
-                  Create an account
-                </button>
+                />
+
                 <p className="text-sm font-light text-gray-500 dark:text-gray-400">
                   Already have an account?{" "}
                   <Link
