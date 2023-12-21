@@ -115,7 +115,7 @@ const SingleQuiz = () => {
           <p className="text-3xl underline font-bold">{headline} </p>
           <p className="mt-5">
             Time: {minutes < 0 ? "0" + minutes : minutes || "00"} Min{" "}
-            {seconds < 10 ? "0" + seconds : seconds} Sec
+            {seconds < 10 ? "0" + seconds : seconds} Sec (15 Min)
           </p>
 
           <div className="card max-w-xl bg-base-100 shadow-xl">

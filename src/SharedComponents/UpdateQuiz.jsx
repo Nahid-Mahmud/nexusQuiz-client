@@ -1,8 +1,14 @@
+import React from "react";
+import { useLoaderData, useNavigate } from "react-router-dom";
+import useAxiosSecure from "../Hooks/useAxiosSecure";
 import Swal from "sweetalert2";
-import useAxiosSecure from "../../Hooks/useAxiosSecure";
 
-const AddQuiz = () => {
+const UpdateQuiz = () => {
+  const navigate = useNavigate();
   const axiosSecure = useAxiosSecure();
+  const data = useLoaderData();
+  const { headline, questions } = data;
+  console.log(data);
   const handleSubmit = (e) => {
     e.preventDefault();
     const headLine = e.target.headLine.value;
@@ -77,23 +83,24 @@ const AddQuiz = () => {
         },
       ],
     };
-
-    axiosSecure.post("/quizes", formData).then((res) => {
-      console.log(res.data);
-      if (res.data?.insertedId) {
-        Swal.fire({
-          position: "center",
-          icon: "success",
-          title: "Your Quiz has been saved",
-          showConfirmButton: false,
-          timer: 1500,
-        });
-        e.target.reset();
-      }
-    });
+    console.log(formData);
+    axiosSecure
+      .put(`/quizes/${data._id}`, formData)
+      .then((res) => {
+        console.log(res.data);
+        if (res?.data?.modifiedCount > 0) {
+          Swal.fire({
+            title: "Updated!",
+            text: "Your file has been Updated.",
+            icon: "success",
+          });
+          navigate("/quiz-actions");
+        }
+      })
+      .catch((err) => console.log(err));
   };
   return (
-    <div className="max-w-[95vw] mx-auto md:w-full">
+    <div className="max-w-[95vw] mx-auto md:w-full ">
       <p className="text-center text-2xl font-semibold  capitalize underline">
         {" "}
         Add exciting Quiz for students!{" "}
@@ -107,6 +114,7 @@ const AddQuiz = () => {
           <input
             type="text"
             name="headLine"
+            defaultValue={headline}
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
             placeholder="HeadLine"
             required
@@ -121,6 +129,7 @@ const AddQuiz = () => {
               </label>
               <input
                 type="text"
+                defaultValue={questions[0]?.question}
                 name="question1"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                 required
@@ -134,6 +143,7 @@ const AddQuiz = () => {
                   Option 1
                 </label>
                 <input
+                  defaultValue={questions[0]?.options[0]}
                   type="text"
                   name="q1option1"
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
@@ -147,6 +157,7 @@ const AddQuiz = () => {
                   Option 2
                 </label>
                 <input
+                  defaultValue={questions[0]?.options[1]}
                   name="q1option2"
                   type="text"
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
@@ -162,6 +173,7 @@ const AddQuiz = () => {
                   Option 3
                 </label>
                 <input
+                  defaultValue={questions[0]?.options[2]}
                   name="q1option3"
                   type="text"
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
@@ -175,6 +187,7 @@ const AddQuiz = () => {
                   Option 4
                 </label>
                 <input
+                  defaultValue={questions[0]?.options[3]}
                   name="q1option4"
                   type="text"
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
@@ -187,6 +200,7 @@ const AddQuiz = () => {
                 Answer 1
               </label>
               <input
+                defaultValue={questions[0]?.answer}
                 name="q1answer"
                 type="text"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
@@ -194,6 +208,7 @@ const AddQuiz = () => {
               />
             </div>
             <textarea
+              defaultValue={questions[0]?.explanation}
               name="q1explanation"
               placeholder="Explanation Question 1"
               className="textarea textarea-bordered textarea-md w-full max-w-xs"
@@ -206,6 +221,7 @@ const AddQuiz = () => {
                 Question : 2
               </label>
               <input
+                defaultValue={questions[1]?.question}
                 name="question2"
                 type="text"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
@@ -220,6 +236,7 @@ const AddQuiz = () => {
                   Option 1
                 </label>
                 <input
+                  defaultValue={questions[1]?.options[0]}
                   name="q2option1"
                   type="text"
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
@@ -233,6 +250,7 @@ const AddQuiz = () => {
                   Option 2
                 </label>
                 <input
+                  defaultValue={questions[1]?.options[1]}
                   name="q2option2"
                   type="text"
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
@@ -248,6 +266,7 @@ const AddQuiz = () => {
                   Option 3
                 </label>
                 <input
+                  defaultValue={questions[1]?.options[2]}
                   name="q2option3"
                   type="text"
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
@@ -261,6 +280,7 @@ const AddQuiz = () => {
                   Option 4
                 </label>
                 <input
+                  defaultValue={questions[1]?.options[3]}
                   name="q2option4"
                   type="text"
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
@@ -273,6 +293,7 @@ const AddQuiz = () => {
                 Answer 2
               </label>
               <input
+                defaultValue={questions[1]?.answer}
                 name="q2answer"
                 type="text"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
@@ -280,6 +301,7 @@ const AddQuiz = () => {
               />
             </div>
             <textarea
+              defaultValue={questions[1]?.explanation}
               name="q2explanation"
               placeholder="Explanation Question 1"
               className="textarea textarea-bordered textarea-md w-full max-w-xs"
@@ -294,6 +316,7 @@ const AddQuiz = () => {
                 Question : 3
               </label>
               <input
+                defaultValue={questions[2]?.question}
                 name="question3"
                 type="text"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
@@ -308,6 +331,7 @@ const AddQuiz = () => {
                   Option 1
                 </label>
                 <input
+                  defaultValue={questions[2]?.options[0]}
                   name="q3option1"
                   type="text"
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
@@ -321,6 +345,7 @@ const AddQuiz = () => {
                   Option 2
                 </label>
                 <input
+                  defaultValue={questions[2]?.options[1]}
                   name="q3option2"
                   type="text"
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
@@ -336,6 +361,7 @@ const AddQuiz = () => {
                   Option 3
                 </label>
                 <input
+                  defaultValue={questions[2]?.options[2]}
                   name="q3option3"
                   type="text"
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
@@ -349,6 +375,7 @@ const AddQuiz = () => {
                   Option 4
                 </label>
                 <input
+                  defaultValue={questions[2]?.options[3]}
                   name="q3option4"
                   type="text"
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
@@ -361,6 +388,7 @@ const AddQuiz = () => {
                 Answer 3
               </label>
               <input
+                defaultValue={questions[2]?.answer}
                 name="q3answer"
                 type="text"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
@@ -368,6 +396,7 @@ const AddQuiz = () => {
               />
             </div>
             <textarea
+              defaultValue={questions[2]?.explanation}
               name="q3explanation"
               placeholder="Explanation Question 3"
               className="textarea textarea-bordered textarea-md w-full max-w-xs"
@@ -379,6 +408,7 @@ const AddQuiz = () => {
                 Question : 4
               </label>
               <input
+                defaultValue={questions[3]?.question}
                 name="question4"
                 type="text"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
@@ -393,6 +423,7 @@ const AddQuiz = () => {
                   Option 1
                 </label>
                 <input
+                  defaultValue={questions[3]?.options[0]}
                   name="q4option1"
                   type="text"
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
@@ -406,6 +437,7 @@ const AddQuiz = () => {
                   Option 2
                 </label>
                 <input
+                  defaultValue={questions[3]?.options[1]}
                   name="q4option2"
                   type="text"
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
@@ -421,6 +453,7 @@ const AddQuiz = () => {
                   Option 3
                 </label>
                 <input
+                  defaultValue={questions[3]?.options[2]}
                   name="q4option3"
                   type="text"
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
@@ -434,6 +467,7 @@ const AddQuiz = () => {
                   Option 4
                 </label>
                 <input
+                  defaultValue={questions[3]?.options[3]}
                   name="q4option4"
                   type="text"
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
@@ -446,6 +480,7 @@ const AddQuiz = () => {
                 Answer 4
               </label>
               <input
+                defaultValue={questions[3]?.answer}
                 name="q4answer"
                 type="text"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
@@ -453,6 +488,7 @@ const AddQuiz = () => {
               />
             </div>
             <textarea
+              defaultValue={questions[3]?.explanation}
               name="q4explanation"
               placeholder="Explanation Question 4"
               className="textarea textarea-bordered textarea-md w-full max-w-xs"
@@ -465,6 +501,7 @@ const AddQuiz = () => {
               Question : 5
             </label>
             <input
+              defaultValue={questions[4]?.question}
               name="question5"
               type="text"
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
@@ -479,6 +516,7 @@ const AddQuiz = () => {
                 Option 1
               </label>
               <input
+                defaultValue={questions[4]?.options[0]}
                 name="q5option1"
                 type="text"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
@@ -492,6 +530,7 @@ const AddQuiz = () => {
                 Option 2
               </label>
               <input
+                defaultValue={questions[4]?.options[1]}
                 name="q5option2"
                 type="text"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
@@ -507,6 +546,7 @@ const AddQuiz = () => {
                 Option 3
               </label>
               <input
+                defaultValue={questions[4]?.options[2]}
                 name="q5option3"
                 type="text"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
@@ -520,6 +560,7 @@ const AddQuiz = () => {
                 Option 4
               </label>
               <input
+                defaultValue={questions[4]?.options[3]}
                 name="q5option4"
                 type="text"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
@@ -532,6 +573,7 @@ const AddQuiz = () => {
               Answer 5
             </label>
             <input
+              defaultValue={questions[4]?.answer}
               name="q5answer"
               type="text"
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
@@ -539,6 +581,7 @@ const AddQuiz = () => {
             />
           </div>
           <textarea
+            defaultValue={questions[4]?.explanation}
             name="q5explanation"
             placeholder="Explanation Question 5"
             className="textarea textarea-bordered textarea-md w-full max-w-xs"
@@ -556,4 +599,4 @@ const AddQuiz = () => {
   );
 };
 
-export default AddQuiz;
+export default UpdateQuiz;

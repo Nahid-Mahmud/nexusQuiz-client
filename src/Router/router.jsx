@@ -9,6 +9,7 @@ import Statistics from "../Pages/Statistics";
 import PrivateRoute from "../PrivaateRoute/PrivateRoute";
 import AddQuiz from "../Pages/AddQuiz/AddQuiz";
 import QuizActions from "../Pages/QuizActions/QuizActions";
+import UpdateQuiz from "../SharedComponents/UpdateQuiz";
 
 const router = createBrowserRouter([
   {
@@ -58,11 +59,31 @@ const router = createBrowserRouter([
       },
       {
         path: "/addQuiz",
-        element: <AddQuiz />,
+        element: (
+          <PrivateRoute>
+            <AddQuiz />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/quiz-actions",
-        element: <QuizActions />,
+        element: (
+          <PrivateRoute>
+            <QuizActions />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/updatequiz/:id",
+        element: (
+          <PrivateRoute>
+            <UpdateQuiz />
+          </PrivateRoute>
+        ),
+        loader: ({ params }) => {
+          // console.log(params);
+          return fetch(`${import.meta.env.VITE_baseUrl}/quiz/${params.id}`);
+        },
       },
     ],
   },

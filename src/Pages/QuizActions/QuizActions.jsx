@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
 const QuizActions = () => {
-  const naviget = useNavigate();
+  const navigae = useNavigate();
   const axiosSecure = useAxiosSecure();
   const { data: quizData = [], refetch: quizDataRefetch } = useQuery({
     queryKey: ["managequizes"],
@@ -48,6 +48,7 @@ const QuizActions = () => {
 
   const handleUpdate = (id) => {
     console.log("update", id);
+    navigae(`/updatequiz/${id}`);
   };
 
   //   console.log(quizData);
