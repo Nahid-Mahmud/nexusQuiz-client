@@ -11,7 +11,7 @@ const Quizes = () => {
   const isTeacher = userInfo?.role === "teacher" ? true : false;
   const isStudent = userInfo?.role === "student" ? true : false;
 
-  const { data: quizData } = useQuery({
+  const { data: quizData = [] } = useQuery({
     queryKey: ["quizes"],
     queryFn: async () => {
       const res = await axiosSecure.get(`/quizes`);
