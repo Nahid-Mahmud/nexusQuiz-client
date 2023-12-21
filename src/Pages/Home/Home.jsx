@@ -3,7 +3,7 @@ import Login from "../Login/Login";
 
 const Home = () => {
   return (
-    <div className="bg-slate-100">
+    <div className="bg-slate-100 mb-5">
       <div className="flex flex-col-reverse gap-5 lg:gap-0 md:flex-row max-w-[95vw] mx-auto min-h-[90vh]  items-center justify-around">
         <div className="text-center">
           <h1 className="md:text-5xl text-3xl font-bold  max-w-lg">
