@@ -26,7 +26,7 @@ const Quizes = () => {
 
   // console.log(quizData);
   return (
-    <div>
+    <div className="min-h-[80vh]">
       <p className="text-center text-2xl font-semibold mt-5 underline">
         {" "}
         All Quizes{" "}

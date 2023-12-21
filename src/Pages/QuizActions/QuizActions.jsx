@@ -54,7 +54,7 @@ const QuizActions = () => {
   //   console.log(quizData);
 
   return (
-    <div>
+    <div className="min-h-[80vh]">
       <p className="capitalize text-center text-2xl underline font-semibold">
         {" "}
         Manage all quizes{" "}
