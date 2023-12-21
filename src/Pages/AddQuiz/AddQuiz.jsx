@@ -1,3 +1,4 @@
+import Swal from "sweetalert2";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 
 const AddQuiz = () => {
@@ -35,39 +36,61 @@ const AddQuiz = () => {
     const q3explanation = e.target.q3explanation.value;
     const q4explanation = e.target.q4explanation.value;
     const q5explanation = e.target.q5explanation.value;
-    console.log(
-      headLine,
-      quisqion1,
-      quisqion2,
-      quisqion3,
-      quisqion4,
-      quisqion5,
-      q1option1,
-      q1option2,
-      q1option3,
-      q1option4,
-      q2option1,
-      q2option2,
-      q2option3,
-      q2option4,
-      q3option1,
-      q3option2,
-      q3option3,
-      q3option4,
-      q4option1,
-      q4option2,
-      q4option3,
-      q4option4,
-      q5option1,
-      q5option2,
-      q5option3,
-      q5option4,
-      q1explanation,
-      q2explanation,
-      q3explanation,
-      q4explanation,
-      q5explanation
-    );
+    const q1answer = e.target.q1answer.value;
+    const q2answer = e.target.q2answer.value;
+    const q3answer = e.target.q3answer.value;
+    const q4answer = e.target.q4answer.value;
+    const q5answer = e.target.q5answer.value;
+
+    const formData = {
+      headline: headLine,
+      questions: [
+        {
+          question: quisqion1,
+          options: [q1option1, q1option2, q1option3, q1option4],
+          answer: q1answer,
+          explanation: q1explanation,
+        },
+        {
+          question: quisqion2,
+          options: [q2option1, q2option2, q2option3, q2option4],
+          answer: q2answer,
+          explanation: q2explanation,
+        },
+        {
+          question: quisqion3,
+          options: [q3option1, q3option2, q3option3, q3option4],
+          answer: q3answer,
+          explanation: q3explanation,
+        },
+        {
+          question: quisqion4,
+          options: [q4option1, q4option2, q4option3, q4option4],
+          answer: q4answer,
+          explanation: q4explanation,
+        },
+        {
+          question: quisqion5,
+          options: [q5option1, q5option2, q5option3, q5option4],
+          answer: q5answer,
+          explanation: q5explanation,
+        },
+      ],
+    };
+
+    axiosSecure.post("/quizes", formData).then((res) => {
+      console.log(res.data);
+      if (res.data?.insertedId) {
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Your Quiz has been saved",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        e.target.reset();
+      }
+    });
   };
   return (
     <div>
@@ -159,6 +182,17 @@ const AddQuiz = () => {
                 />
               </div>
             </div>
+            <div className="mb-5">
+              <label className="block mb-2 text-sm font-medium text-gray-900 ">
+                Answer 1
+              </label>
+              <input
+                name="q1answer"
+                type="text"
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                required
+              />
+            </div>
             <textarea
               name="q1explanation"
               placeholder="Explanation Question 1"
@@ -233,6 +267,17 @@ const AddQuiz = () => {
                   required
                 />
               </div>
+            </div>
+            <div className="mb-5">
+              <label className="block mb-2 text-sm font-medium text-gray-900 ">
+                Answer 2
+              </label>
+              <input
+                name="q2answer"
+                type="text"
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                required
+              />
             </div>
             <textarea
               name="q2explanation"
@@ -311,6 +356,17 @@ const AddQuiz = () => {
                 />
               </div>
             </div>
+            <div className="mb-5">
+              <label className="block mb-2 text-sm font-medium text-gray-900 ">
+                Answer 3
+              </label>
+              <input
+                name="q3answer"
+                type="text"
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                required
+              />
+            </div>
             <textarea
               name="q3explanation"
               placeholder="Explanation Question 3"
@@ -384,6 +440,17 @@ const AddQuiz = () => {
                   required
                 />
               </div>
+            </div>
+            <div className="mb-5">
+              <label className="block mb-2 text-sm font-medium text-gray-900 ">
+                Answer 4
+              </label>
+              <input
+                name="q4answer"
+                type="text"
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                required
+              />
             </div>
             <textarea
               name="q4explanation"
@@ -459,6 +526,17 @@ const AddQuiz = () => {
                 required
               />
             </div>
+          </div>
+          <div className="mb-5">
+            <label className="block mb-2 text-sm font-medium text-gray-900 ">
+              Answer 5
+            </label>
+            <input
+              name="q5answer"
+              type="text"
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+              required
+            />
           </div>
           <textarea
             name="q5explanation"

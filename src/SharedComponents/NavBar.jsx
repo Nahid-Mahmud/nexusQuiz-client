@@ -84,7 +84,7 @@ const NavBar = () => {
       )}
       {user && isTeacher ? (
         <li>
-          <NavItem itemName={"Delete Quiz"} pathName={"deleteQuiz"} />
+          <NavItem itemName={"Quiz Actions"} pathName={"quiz-actions"} />
         </li>
       ) : (
         ""
