@@ -81,9 +81,9 @@ const SignUp = () => {
     <div>
       <div className="bg-gray-50 flex  flex-col-reverse md:flex-row  items-center py-5 lg:py-0  justify-around ">
         <div className="flex flex-col  items-center justify-center   py-8 lg:w-[40rem]  md:h-screen lg:py-0">
-          <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+          <div className="w-full bg-white rounded-lg shadow">
             <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
-              <h1 className="text-xl  text-center font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
+              <h1 className="text-xl  text-center font-bold leading-tight tracking-tight text-gray-900 md:text-2xl d">
                 Create and account
               </h1>
               <form
@@ -92,7 +92,7 @@ const SignUp = () => {
                 action="#"
               >
                 <div>
-                  <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                  <label className="block mb-2 text-sm font-medium text-gray-900 ">
                     Your Name
                   </label>
                   <input
@@ -105,20 +105,20 @@ const SignUp = () => {
                   />
                 </div>
                 <div>
-                  <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                  <label className="block mb-2 text-sm font-medium text-gray-900 ">
                     Your email
                   </label>
                   <input
                     type="email"
                     name="email"
                     id="email"
-                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
                     placeholder="name@company.com"
                     required={true}
                   />
                 </div>
                 <div>
-                  <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                  <label className="block mb-2 text-sm font-medium text-gray-900 ">
                     Password
                   </label>
                   <input
@@ -126,12 +126,12 @@ const SignUp = () => {
                     name="password"
                     id="password"
                     placeholder="••••••••"
-                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                     required={true}
                   />
                 </div>
                 <div>
-                  <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                  <label className="block mb-2 text-sm font-medium text-gray-900 ">
                     Confirm password
                   </label>
                   <input
@@ -139,13 +139,13 @@ const SignUp = () => {
                     name="confirmPassword"
                     id="confirm-password"
                     placeholder="••••••••"
-                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                     required={true}
                   />
                 </div>
 
                 <div>
-                  <label className="block mb-2 capitalize text-sm font-medium text-gray-900 dark:text-white">
+                  <label className="block mb-2 capitalize text-sm font-medium text-gray-900 ">
                     Select A user Type
                   </label>
                   <select
@@ -171,15 +171,15 @@ const SignUp = () => {
                       id="terms"
                       aria-describedby="terms"
                       type="checkbox"
-                      className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800"
+                      className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300"
                       required
                     />
                   </div>
 
                   <div className="ml-3 text-sm">
-                    <label className="font-light text-gray-500 dark:text-gray-300">
+                    <label className="font-light text-gray-500 ">
                       I accept the{" "}
-                      <span className="font-medium text-primary-600 hover:underline dark:text-primary-500">
+                      <span className="font-medium text-primary-600 hover:underline ">
                         Terms and Conditions
                       </span>
                     </label>
@@ -188,14 +188,14 @@ const SignUp = () => {
                 <input
                   type="submit"
                   value={" Create an account"}
-                  className="w-full text-black btn  bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+                  className="w-full text-black btn  bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center d"
                 />
 
-                <p className="text-sm font-light text-gray-500 dark:text-gray-400">
+                <p className="text-sm font-light text-gray-500 ">
                   Already have an account?{" "}
                   <Link
                     to={"/logIn"}
-                    className="font-medium text-primary-600 hover:underline dark:text-primary-500"
+                    className="font-medium text-primary-600 hover:underline "
                   >
                     Login here
                   </Link>
