@@ -22,6 +22,12 @@ const Statistics = () => {
         </p>
       </div>
       <hr className="max-w-md mx-auto " />
+      <div className="flex justify-center">
+        <iframe
+          className="h-96 w-96"
+          src="https://lottie.host/embed/9d94aba0-b760-40ca-84ec-036d99e350ca/GGpBbQHKPQ.json"
+        ></iframe>
+      </div>
       <div className="grid md:grid-cols-2 gap-10 my-20">
         <div>
           <div className="card  bg-base-100 shadow-xl">

@@ -24,26 +24,34 @@ const Quizes = () => {
     console.log(id);
   };
 
-  console.log(quizData);
+  // console.log(quizData);
   return (
     <div>
-      <div className="max-w-[95vw] mx-auto">
-        <div>
-          <p className="text-center text-2xl font-semibold "> All Quizes </p>
-        </div>
-        <div className="text-center gap-3 my-5 p-3 flex flex-col shadow-2xl rounded-md max-w-lg mx-auto ">
+      <p className="text-center text-2xl font-semibold mt-5 underline">
+        {" "}
+        All Quizes{" "}
+      </p>
+      <div className="max-w-[95vw] flex flex-col-reverse md:flex-row items-center justify-center  mx-auto">
+        <div className="text-center gap-3 my-5  flex flex-col  rounded-md max-w-lg mx-auto ">
           {quizData?.map((quiz, index) => {
             return (
               <p
                 onClick={() => handleQuiz(quiz?._id)}
-                className="btn overflow-hidden"
+                className="btn md:text-lg min-h-14 md:min-h-16 lg:min-h-0  text-sm  "
                 key={index}
               >
                 {" "}
-                Quiz No {index + 1}: {quiz?.headline}
+                Quiz No {index + 1} :{" "}
+                <span className="font-normal text-sm md:text-base ">{quiz?.headline}</span>
               </p>
             );
           })}
+        </div>
+        <div>
+          <iframe
+            className="h-96 w-96"
+            src="https://lottie.host/embed/9bdc1fdc-b62c-4ea8-87a2-7acf7b1d1b56/UF48GaLHzy.json"
+          ></iframe>
         </div>
       </div>
     </div>

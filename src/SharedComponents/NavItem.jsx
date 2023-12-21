@@ -8,7 +8,7 @@ const NavItem = ({ itemName, pathName }) => {
         isPending
           ? "pending"
           : isActive
-          ? "border-b-2 border-black-300 text-orange-300"
+          ? "border-b-2 border-black-300 text-black-300 font-bold bg-slate-300"
           : ""
       }
     >
