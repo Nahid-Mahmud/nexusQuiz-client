@@ -31,7 +31,7 @@ const Quizes = () => {
         <div>
           <p className="text-center text-2xl font-semibold "> All Quizes </p>
         </div>
-        <div className="text-center gap-3 my-5 p-3 flex flex-col shadow-2xl max-w-lg mx-auto ">
+        <div className="text-center gap-3 my-5 p-3 flex flex-col shadow-2xl rounded-md max-w-lg mx-auto ">
           {quizData?.map((quiz, index) => {
             return (
               <p

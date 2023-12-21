@@ -44,7 +44,7 @@ const Statistics = () => {
             <div className="card-body">
               <h2 className="card-title"> Avarage Score </h2>
               <p className="capitalize">
-                average score : {totalScore / userStasisticData?.length}
+                average score : {totalScore / userStasisticData?.length || 0}
               </p>
             </div>
           </div>

@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { useLoaderData } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useLoaderData, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import QuizDataWithAnswer from "./QuizDataWithAnswer";
 import useAxiosPublic from "../../Hooks/useAxiosPublic";
@@ -13,12 +13,33 @@ const SingleQuiz = () => {
   const { headline, questions } = quizData;
   const axiosPublic = useAxiosPublic();
   const { user } = useAuth();
+  const [secondSeconds, setSecondSeconds] = useState(0);
+
+  const [seconds, setSeconds] = useState(0);
+  const [minutes, setMinutes] = useState(0);
+  const [buttonDisabel, setButtonDisabel] = useState(false);
+  const navigate = useNavigate();
+
   // console.log(questions[0].length);
 
   // console.log("Quiz data form singleQuiz page", questions[quizIndex]?.answer);
   let finalScore = 0;
 
   // console.log("Quiz data form singleQuiz page", questions.length);
+
+  // post score data to database
+  const postScore = () => {
+    axiosPublic
+      .post(`/scores`, {
+        score: finalScore,
+        headline,
+        totalQuiz: questions?.length,
+        email: user?.email,
+      })
+      .then((res) => {
+        console.log(res.data);
+      });
+  };
 
   const handleQuizNextButton = (answer, index) => {
     if (answer === questions[quizIndex]?.answer) {
@@ -33,19 +54,7 @@ const SingleQuiz = () => {
     }
 
     if (quizIndex === questions.length - 1) {
-      // alert("Your score is " + score);
-
-      axiosPublic
-        .post(`/scores`, {
-          score: finalScore,
-          headline,
-          totalQuiz: questions?.length,
-          email: user?.email,
-        })
-        .then((res) => {
-          console.log(res.data);
-        });
-
+      postScore();
       setShowdata(true);
       Swal.fire({
         title: "Good job!",
@@ -54,14 +63,60 @@ const SingleQuiz = () => {
       });
     }
   };
-  // console.log("score", score);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setSeconds(seconds + 1);
+      setSecondSeconds(secondSeconds + 1);
+      if (seconds === 59) {
+        setMinutes(minutes + 1);
+        setSeconds(0);
+      }
+    }, 1000);
+
+    return () => clearInterval(interval);
+  });
+
+  if (secondSeconds === 900) {
+    // postScore();
+    // setShowdata(true);
+    // setButtonDisabel(true);
+    let timerInterval;
+    Swal.fire({
+      title: "Times Up!",
+      html: "Going Back To All Quizes Page in <b></b> milliseconds.",
+      timer: 3000,
+      timerProgressBar: true,
+      didOpen: () => {
+        Swal.showLoading();
+        const timer = Swal.getPopup().querySelector("b");
+        timerInterval = setInterval(() => {
+          timer.textContent = `${Swal.getTimerLeft()}`;
+        }, 100);
+      },
+      willClose: () => {
+        clearInterval(timerInterval);
+      },
+    }).then((result) => {
+      /* Read more about handling dismissals below */
+      if (result.dismiss === Swal.DismissReason.timer) {
+        console.log("I was closed by the timer");
+        navigate("/quizes");
+      }
+    });
+  }
+
   return (
     <>
       {showdata ? (
         <QuizDataWithAnswer quizData={quizData} />
       ) : (
         <div className="min-h-screen w-fit mx-auto flex flex-col items-center mt-20">
-          <p className="text-3xl underline font-bold">{headline}</p>
+          <p className="text-3xl underline font-bold">{headline} </p>
+          <p className="mt-5">
+            Time: {minutes < 0 ? "0" + minutes : minutes || "00"} Min{" "}
+            {seconds < 10 ? "0" + seconds : seconds} Sec
+          </p>
 
           <div className="card max-w-xl bg-base-100 shadow-xl">
             <div className="card-body">
